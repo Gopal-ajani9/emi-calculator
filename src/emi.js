@@ -10,11 +10,11 @@
 function Loan (amount, installmentsNumber, interestRate) {
   /** Checking params */
   // function Loan
-if (!amount || amount <= 0 ||
+  if (!amount || amount <= 0 ||
   !installmentsNumber || installmentsNumber <= 0 ||
   !interestRate || interestRate <= 0) {
- throw new Error(`wrong parameters: ${amount} ${installmentsNumber} ${interestRate}`)
-}
+    throw new Error(`wrong parameters: ${amount} ${installmentsNumber} ${interestRate}`)
+  }
 
   const installments = []
   let interestSum = 0
@@ -40,7 +40,7 @@ if (!amount || amount <= 0 ||
   }
 
   return {
-    installments: installments,
+    installments,
     amount: rnd(amount),
     interestSum: rnd(interestSum),
     principalSum: rnd(principalSum),
@@ -69,9 +69,9 @@ const getNextInstallment = (
   const principal = installment - interest
 
   return {
-    principal: principal,
-    interest: interest,
-    installment: installment,
+    principal,
+    interest,
+    installment,
     remain: amount - principalSum - principal,
     interestSum: interestSum + interest
   }
@@ -89,8 +89,8 @@ function emiToHtmlTable (loan, params) {
   params.formatMoney = params.formatMoney || function (num) {
     return num.toFixed(2)
   }
-  var fm = params.formatMoney
-  var html = [
+  const fm = params.formatMoney
+  const html = [
     '<table class="table table-striped">' +
       '<thead>' +
         '<tr>' +
@@ -108,9 +108,9 @@ function emiToHtmlTable (loan, params) {
     '</table>'
   ]
 
-  for (var i = 0; i < loan.installments.length; i++) {
-    var inst = loan.installments[i]
-    var instHtml =
+  for (let i = 0; i < loan.installments.length; i++) {
+    const inst = loan.installments[i]
+    const instHtml =
           '<tr>' +
             '<td>' + (i + 1) + '</td>' +
             '<td>' + fm(inst.principal) + '</td>' +
@@ -153,8 +153,8 @@ if (typeof module === 'undefined') {
 } else {
   // node or browserfy
   module.exports = {
-    Loan: Loan,
-    emiToHtmlTable: emiToHtmlTable,
-    rnd: rnd
+    Loan,
+    emiToHtmlTable,
+    rnd
   }
 }
